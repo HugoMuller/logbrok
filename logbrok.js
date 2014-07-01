@@ -7,6 +7,7 @@ var path = require('path');
  */
 var Logbrok = function(title){
   this._title = path.basename(title);
+  return this;
 };
 
 /**
@@ -15,11 +16,12 @@ var Logbrok = function(title){
  */
 Logbrok.prototype.now = function(){
   var time = new Date();
-  var time_array = [time.getFullYear(), time.getMonth()+1, time.getDate(), time.getHours(), time.getMinutes(), time.getSeconds()]
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var time_array = [time.getDate(), time.getHours(), time.getMinutes(), time.getSeconds()]
     .map(function(elem){
       return (elem.toString().length < 2) ? '0'+elem : elem;
     });
-  return time_array.splice(0, 3).join('-') + ' ' + time_array.join(':');
+  return months[time.getMonth()]+' '+time_array.shift()+', '+time.getFullYear()+' - '+time_array.join(':');
 };
 
 /**
@@ -35,7 +37,7 @@ Logbrok.prototype.title = function(title){
 /*
  * Extend main methods of default console
  */
-['debug', 'dir', 'error', 'exception', 'info', 'log'].forEach(function(f){
+['debug', 'dir', 'error', 'exception', 'info', 'log', 'trace', 'warn'].forEach(function(f){
   Logbrok.prototype[f] = function(){
     var args = Array.prototype.slice.call(arguments);
     if(this._title && this._title.length>0) args.unshift('['+this._title+']');
