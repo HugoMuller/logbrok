@@ -1,0 +1,23 @@
+{
+  "name": "logbrok",
+  "description": "Simple logger that add some colors to node's default console",
+  "version": "0.0.1",
+  "author": "Hugo Müller",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HugoMuller/logbrok.git"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.3.x"
+  },
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha -u bdd -R spec"
+  },
+  "devDependencies": {
+    "mocha": "1.20.1",
+    "should": "4.0.4"
+  }
+}
