@@ -1,7 +1,7 @@
 {
   "name": "logbrok",
   "description": "Simple logger that add some colors to node's default console",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Hugo Müller",
   "license": "MIT",
   "private": false,

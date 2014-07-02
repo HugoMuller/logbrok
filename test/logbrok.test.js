@@ -6,22 +6,51 @@ var console = require('../logbrok')(__filename);
 
 describe('<Unit Test>', function(){
   describe('Module Logbrok', function(){
-    describe('Method title', function(){
-      it('should begin with __filename as title', function(){
-        console._title.should.equal(path.basename(__filename));
+    describe('Method now', function(){
+      it('should return current time using the following pattern: MMM DD, YYYY - HH:mm:ss', function(){
+        var expected = /[A-Za-z]{3,4} \d{2}, \d{4} - \d{2}:\d{2}:\d{2}/;
+        expected.test(console.now()).should.equal(true);
+      });
+    });
+
+    describe('Method set', function(){
+      var options = { title: path.basename(__filename), color: false, time: true, log_level: 'log' };
+      it('should begin with default options and a custom title', function(){
+        console.options.should.containEql(options);
+      });
+
+      it('should update the options of the console', function(){
+        var new_options = { title: 'new title', color: true, time: false, log_level: 'error' };
+        console.set(new_options).options.should.containEql(new_options);
       });
       
-      it('should set the title of the console', function(){
-        console.title('new title')._title.should.equal('new title');
+      after(function(){
+        console.set(options);
       });
     });
     
-    describe('Method now', function(){
-      it('should return current time using the following pattern: MMM DD, YYYY - HH:mm:ss', function(done){
-        var actual = console.now();
-        var expected = /[A-Za-z]{3,4} \d{2}, \d{4} - \d{2}:\d{2}:\d{2}/;
-        (actual.length === 24 || actual.length === 25).should.equal(true);
-        expected.test(actual).should.equal(true);
+    describe('Some example...', function(){
+      it('should print some examples...', function(done){
+        console
+          .set({color: true})
+
+          .set({log_level: 'error'})
+          .error('this error should be printed')
+          .log('this log should not be printed')
+
+          .set({log_level: 'warn'})
+          .error('this error should be printed')
+          .warn('this warning should be printed')
+          .log('this log should not be printed')
+
+          .set({log_level: 'log'})
+          .error('this error should be printed')
+          .log('this log should be printed')
+          .info('this info should not be printed')
+
+          .set({log_level: 'info'})
+          .error('this error should be printed')
+          .info('this info should be printed');
         done();
       });
     });

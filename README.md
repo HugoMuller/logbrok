@@ -1,7 +1,8 @@
 logbrok
 =======
 
-Simple logger that add some colors to node's default console
+Simple logger that add some colors to node's default console.  
+Inspired by [consolation](https://github.com/alexjab/consolation.git).
 
 Quick Start
 ===========
