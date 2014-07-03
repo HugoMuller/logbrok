@@ -1,7 +1,7 @@
 {
   "name": "logbrok",
-  "description": "Simple logger that add some colors to node's default console",
-  "version": "0.0.5",
+  "description": "Simple logger that add some colors to node's default console. Inspired by consolation: https://github.com/alexjab/consolation.git",
+  "version": "0.0.6",
   "author": "Hugo Müller",
   "license": "MIT",
   "private": false,
@@ -11,6 +11,7 @@
   },
   "keywords": [
     "color",
+    "colors",
     "console",
     "logger",
     "log",
@@ -23,6 +24,7 @@
   "scripts": {
     "test": "mocha -u bdd -R spec"
   },
+  "main": "logbrok",
   "devDependencies": {
     "should": "4.0.4"
   }

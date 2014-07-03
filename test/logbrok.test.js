@@ -5,7 +5,7 @@ var path = require('path');
 var console = require('../logbrok')(__filename);
 var console2 = require('../logbrok')({title: __filename+' 2', color: true});
 
-describe('<Unit Test>', function(){
+describe('<Unit Tests>', function(){
   describe('Module Logbrok', function(){
     describe('Method now', function(){
       it('should return current time using the following pattern: YYYY/MM/DD HH:mm:ss', function(done){
@@ -16,7 +16,7 @@ describe('<Unit Test>', function(){
     });
 
     describe('Method set', function(){
-      var options = { title: path.basename(__filename), color: false, time: true, log_level: 'log' };
+      var options = { title: path.basename(__filename), color: true, time: true, log_level: 'log' };
       it('should begin with default options and a custom title', function(done){
         console.options.should.containEql(options);
         done();
@@ -59,7 +59,9 @@ describe('<Unit Test>', function(){
           .info('this info should be printed')
           .set({title: null})
           .warn('line without title')
-          .set({time: false})
+          .set({title: __filename+' 2', time: false})
+          .log('line without time')
+          .set({title: null})
           .info('nothing but the log')
           .set({color: false})
           .log('standard log line');

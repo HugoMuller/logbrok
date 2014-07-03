@@ -2,8 +2,11 @@
 
 var path = require('path');
 
-/*
- * A basic Logger that add some colors to node's default console"
+/**
+ * A basic logger that adds some colors to node's default console
+ * @param options
+ * @returns {Logbrok}
+ * @constructor
  */
 var Logbrok = function(options){
   options = options || {};
@@ -22,7 +25,7 @@ var Logbrok = function(options){
 };
 
 /**
- * Return current time using the following pattern: MMM DD, YYYY - HH:mm:ss
+ * Return current time using the following pattern: YYYY/MM/DD HH:mm:ss
  * @returns {string}
  */
 Logbrok.prototype.now = function(){
@@ -36,13 +39,11 @@ Logbrok.prototype.now = function(){
 
 /**
  * Update the options of the Logbrok console
- * @param options
+ * @param {object} options - The options to change
  * @returns {Logbrok}
  */
 Logbrok.prototype.set = function(options){
-  if(options.hasOwnProperty('title')){
-    if(options.title) options.title = path.basename(options.title);
-  }
+  if(options.hasOwnProperty('title') && options.title) options.title = path.basename(options.title);
 
   Object.keys(options).forEach(function(option){
     this.options[option] = options[option];
@@ -60,23 +61,34 @@ var methods = {
   info:  { lvl: 0, color: '\x1B[36m' }
 };
 
-// determine if the logger should print or not accordind to its log level
+/**
+ * Determine if the logger should print something or not accordind to its log level
+ * @param {string} f - The method name to test
+ * @param {string} ref - The minimum log level
+ * @returns {boolean}
+ */
 var canPrint = function(f, ref){
   if(!methods[ref]) ref = 'log';
   return methods[f].lvl >= methods[ref].lvl;
 };
 
-// return the correct method's color, or the default one
+/**
+ * Return the correct method's color, or the default one
+ * @param {string} f - A method name, or 'default' or 'time'
+ * @param {boolean} bright - Set color intensity to bright or normal
+ * @returns {string}
+ */
 var colorOf = function(f, bright){
   if(f === 'time') return bright ? '\x1B[35;1m' : '\x1B[35m';
   if(f === 'default' || !methods[f]) return '\x1B[39m';
   return bright ? methods[f].color.replace('m', ';1m') : methods[f].color;
 };
 
-/*
- * Extend main methods of default console
- */
 Object.keys(methods).forEach(function(f){
+  /**
+   * Extend main methods of default console, defined in the methods variable
+   * @returns {Logbrok}
+   */
   Logbrok.prototype[f] = function(){
     if(!canPrint(f, this.options.log_level)) return this;
     var args = Array.prototype.slice.call(arguments);
@@ -104,4 +116,4 @@ Object.keys(methods).forEach(function(f){
   };
 });
 
-module.exports = function(title){ return new Logbrok(title); };
+module.exports = function(options){ return new Logbrok(options); };
