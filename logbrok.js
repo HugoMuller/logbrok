@@ -9,6 +9,7 @@ var Logbrok = function(options){
   options = options || {};
   
   this.options = {
+    title: null,
     color: false,
     bright: true,
     time: true,
