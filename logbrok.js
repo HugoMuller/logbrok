@@ -10,17 +10,15 @@ var Logbrok = function(options){
   
   this.options = {
     title: null,
-    color: false,
+    color: true,
     bright: true,
     time: true,
     show_date: true,
     log_level: 'log'
   };
-  
-  if(typeof options === 'string') this.options.title = path.basename(options);
-  else this.set(options);
-  
-  return this;
+
+  if(typeof options === 'string') options = { title: options };
+  return this.set(options);
 };
 
 /**
@@ -42,10 +40,13 @@ Logbrok.prototype.now = function(){
  * @returns {Logbrok}
  */
 Logbrok.prototype.set = function(options){
+  if(options.hasOwnProperty('title')){
+    if(options.title) options.title = path.basename(options.title);
+  }
+
   Object.keys(options).forEach(function(option){
     this.options[option] = options[option];
   }, this);
-  if(options.title) this.options.title = path.basename(options.title);
   return this;
 };
 
@@ -95,7 +96,7 @@ Object.keys(methods).forEach(function(f){
     if(this.options.time){
       var time = this.now();
       if(!this.options.show_date) time = time.split(' ').pop();
-      if(!star) args.unshift('*');
+      if(!star) args.unshift(colors.def+'*');
       args.unshift(colors.time+time);
     }
     console[f].apply(this, args);

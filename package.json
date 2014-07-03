@@ -1,7 +1,7 @@
 {
   "name": "logbrok",
   "description": "Simple logger that add some colors to node's default console",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Hugo Müller",
   "license": "MIT",
   "private": false,
@@ -9,6 +9,13 @@
     "type": "git",
     "url": "https://github.com/HugoMuller/logbrok.git"
   },
+  "keywords": [
+    "color",
+    "console",
+    "logger",
+    "log",
+    "lightweight"
+  ],
   "engines": {
     "node": "0.10.x",
     "npm": "1.3.x"

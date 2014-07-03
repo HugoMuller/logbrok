@@ -56,7 +56,13 @@ describe('<Unit Test>', function(){
         console2
           .set({log_level: 'info', show_date: false, bright: false})
           .error('this error should be printed')
-          .info('this info should be printed');
+          .info('this info should be printed')
+          .set({title: null})
+          .warn('line without title')
+          .set({time: false})
+          .info('nothing but the log')
+          .set({color: false})
+          .log('standard log line');
         done();
       });
     });

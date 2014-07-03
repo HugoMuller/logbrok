@@ -43,7 +43,7 @@ You can pass some options when instanciating the logger:
 The available options you can use are:
 
  - `title [String]`: a custom title for the logger. It can be the filename, or whatever you want. (default is `null`),
- - `color [Boolean]`: whether to output colored lines or not. `false` is a good choice if you need to output the log lines in a file (default is `false`),
+ - `color [Boolean]`: whether to output colored lines or not. `false` is a good choice if you need to output the log lines to a file (default is `true`),
  - `bright [Boolean]`: whether to use bright colors, or normal colors. It has no effect if color is false (default is `true`),
  - `time [Boolean]`: whether to display the record time on each line, or not (default is `true`),
  - `show_date [Boolean]`: whether to display the full date time, or just the time. It has no effect if time is false (default is `true`),
