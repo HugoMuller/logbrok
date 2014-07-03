@@ -10,18 +10,14 @@ var Logbrok = function(options){
   
   this.options = {
     color: false,
+    bright: true,
     time: true,
+    show_date: true,
     log_level: 'log'
   };
   
-  if(typeof options === 'string'){
-    this.options.title = path.basename(options);
-  }else{
-    Object.keys(options).forEach(function(option){
-      this.options[option] = options[option];
-    }, this);
-    this.options.title = path.basename(options.title);
-  }
+  if(typeof options === 'string') this.options.title = path.basename(options);
+  else this.set(options);
   
   return this;
 };
@@ -32,12 +28,11 @@ var Logbrok = function(options){
  */
 Logbrok.prototype.now = function(){
   var time = new Date();
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var time_array = [time.getDate(), time.getHours(), time.getMinutes(), time.getSeconds()]
+  var time_array = [time.getFullYear(), time.getMonth()+1, time.getDate(), time.getHours(), time.getMinutes(), time.getSeconds()]
     .map(function(elem){
       return (elem.toString().length < 2) ? '0'+elem : elem;
     });
-  return months[time.getMonth()]+' '+time_array.shift()+', '+time.getFullYear()+' - '+time_array.join(':');
+  return time_array.splice(0, 3).join('/') + ' ' + time_array.join(':');
 };
 
 /**
@@ -70,8 +65,10 @@ var canPrint = function(f, ref){
 };
 
 // return the correct method's color, or the default one
-var colorOf = function(f){
-  return (f === 'default') ? '\x1B[39m' : methods[f].color;
+var colorOf = function(f, bright){
+  if(f === 'time') return bright ? '\x1B[35;1m' : '\x1B[35m';
+  if(f === 'default' || !methods[f]) return '\x1B[39m';
+  return bright ? methods[f].color.replace('m', ';1m') : methods[f].color;
 };
 
 /*
@@ -81,15 +78,24 @@ Object.keys(methods).forEach(function(f){
   Logbrok.prototype[f] = function(){
     if(!canPrint(f, this.options.log_level)) return this;
     var args = Array.prototype.slice.call(arguments);
+    var star = false;
+    var colors = { def: '', time: '' };
+    
     if(this.options.color){
-      args.unshift(colorOf(f));
-      args.push(colorOf('default'));
+      colors = { def: colorOf('default'), time: colorOf('time', this.options.bright) };
+      args[0] = colorOf(f, this.options.bright)+args[0];
+      args.push(colors.def);
     }
-    if(this.options.title && this.options.title.length>0) args.unshift('['+this.options.title+']');
+    if(this.options.title && this.options.title.length>0){
+      star = true;
+      args.unshift('*');
+      args.unshift(colors.def+'['+this.options.title+']');
+    }
     if(this.options.time){
       var time = this.now();
-      if(this.options.time === 'short') time = time.split(' - ').pop();
-      args.unshift(time);
+      if(!this.options.show_date) time = time.split(' ').pop();
+      if(!star) args.unshift('*');
+      args.unshift(colors.time+time);
     }
     console[f].apply(this, args);
     return this;
