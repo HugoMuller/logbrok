@@ -1,10 +1,14 @@
 logbrok
 =======
 
--------
+[![NPM version](https://badge.fury.io/js/logbrok.png)](http://badge.fury.io/js/consolation)
 
 Simple logger that add some colors to node's default console.  
 Inspired by [consolation](https://github.com/alexjab/consolation.git).
+
+-------
+
+![image](http://i.imgur.com/YPZabhd.png?1)
 
 Installation
 ------------
@@ -16,7 +20,7 @@ Usage
 
 ###Basic Usage
 
-    var console = require('./logbrok')(__filename);
+    var console = require('logbrok')(__filename);
     
     console.info('this is an information');
     console.log('hello');
@@ -37,7 +41,7 @@ You can also chain method calls:
 
 You can pass some options when instanciating the logger:
 
-    var console = require('./logbrok')({ title: __filename, log_level: 'warn', color: true });
+    var console = require('logbrok')({ title: __filename, log_level: 'warn', color: true });
     
 The available options you can use are:
 
@@ -54,7 +58,7 @@ The available options you can use are:
 
 If you want, you can change some options after the instanciation.
 
-    var console = require('.logbrok')({ title: __filename, color: true });
+    var console = require('logbrok')({ title: __filename, color: true });
     
     console
       .error('this error is printed in red!')
