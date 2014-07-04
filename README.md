@@ -9,7 +9,7 @@ Inspired by [consolation](https://github.com/alexjab/consolation.git).
 Installation
 ------------
 
-    //TODO
+    npm install logbrok
 
 Usage
 -----
