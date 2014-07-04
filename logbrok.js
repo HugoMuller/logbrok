@@ -32,7 +32,7 @@ Logbrok.prototype.now = function(){
   var time = new Date();
   var time_array = [time.getFullYear(), time.getMonth()+1, time.getDate(), time.getHours(), time.getMinutes(), time.getSeconds()]
     .map(function(elem){
-      return (elem.toString().length < 2) ? '0'+elem : elem;
+      return (elem < 10) ? '0'+elem : elem;
     });
   return time_array.splice(0, 3).join('/') + ' ' + time_array.join(':');
 };
