@@ -1,7 +1,7 @@
 logbrok
 =======
 
-[![NPM version](https://badge.fury.io/js/logbrok.png)](http://badge.fury.io/js/consolation)
+[![NPM version](https://badge.fury.io/js/logbrok.png)](http://badge.fury.io/js/logbrok)
 
 Simple logger that add some colors to node's default console.  
 Inspired by [consolation](https://github.com/alexjab/consolation.git).
