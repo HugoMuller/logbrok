@@ -97,18 +97,18 @@ Object.keys(methods).forEach(function(f){
     
     if(this.options.color){
       colors = { def: colorOf('default'), time: colorOf('time', this.options.bright) };
-      args[0] = colorOf(f, this.options.bright)+args[0];
+      args.unshift(colorOf(f, this.options.bright));
       args.push(colors.def);
     }
     if(this.options.title && this.options.title.length>0){
       star = true;
-      args.unshift('*');
+      args[0] = '*'+args[0];
       args.unshift(colors.def+'['+this.options.title+']');
     }
     if(this.options.time){
       var time = this.now();
       if(!this.options.show_date) time = time.split(' ').pop();
-      if(!star) args.unshift(colors.def+'*');
+      if(!star) args[0] = colors.def+'*'+args[0];
       args.unshift(colors.time+time);
     }
     console[f].apply(this, args);
